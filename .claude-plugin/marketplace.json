@@ -1,0 +1,17 @@
+{
+  "name": "koyon-work",
+  "owner": {
+    "name": "koyon",
+    "email": "development@simula-labs.com"
+  },
+  "plugins": [
+    {
+      "name": "check-gh-head",
+      "source": "./",
+      "description": "現在のブランチに develop / main の HEAD がマージされているか判定する。セッション開始時および /check-gh-head で発火する。",
+      "version": "0.1.0",
+      "homepage": "https://github.com/koyonx/claude_plugin_for-work",
+      "repository": "https://github.com/koyonx/claude_plugin_for-work"
+    }
+  ]
+}

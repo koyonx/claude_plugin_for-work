@@ -1,0 +1,8 @@
+{
+  "name": "check-gh-head",
+  "version": "0.1.0",
+  "description": "現在のブランチに develop / main の HEAD がマージされているか判定する。セッション開始時および /check-gh-head で発火する。",
+  "author": {
+    "name": "koyon"
+  }
+}
