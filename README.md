@@ -1,8 +1,9 @@
-# check-gh-head
+# koyon-work marketplace
 
-現在の作業ブランチに `develop` / `main` の最新 HEAD がマージされているかを判定する Claude Code プラグイン。セッション開始時に未マージなら自動で警告し、`/check-gh-head` でいつでも明示的に確認できる。
+koyon 個人用の Claude Code マーケットプレイス。現在は 2 プラグインを配布しています。
 
-このリポジトリ自体が単一プラグインを配布する Claude Code マーケットプレイスでもあります。
+- **`check-gh-head`** — 現在のブランチに `develop` / `main` の最新 HEAD がマージされているかを判定し、未マージなら警告する。
+- **`study`** — カレントリポジトリの技術スタックを検出し、実践的な使い方や類似技術との比較を問題形式で学ばせる。
 
 ## インストール
 
@@ -11,10 +12,11 @@ Claude Code で次を実行:
 ```
 /plugin marketplace add koyonx/claude_plugin_for-work
 /plugin install check-gh-head@koyon-work
+/plugin install study@koyon-work
 /reload-plugins
 ```
 
-## 機能
+## check-gh-head
 
 ### `/check-gh-head` スラッシュコマンド
 
@@ -49,11 +51,32 @@ Claude Code 起動時 (`startup` matcher) に `--quiet` モードで自動判定
 
 現ブランチ自身が `develop` / `main` の場合、その対象はスキップする。detached HEAD や非 git ディレクトリでは何もしない。
 
+## study
+
+### `/study` スラッシュコマンド
+
+カレントワークツリー内のマニフェスト (`package.json`, `pyproject.toml`, `Cargo.toml`, `Dockerfile`, `.github/workflows/*` など) を読み取って主要な技術スタックを検出し、その技術についてインタラクティブに出題する。
+
+4 つのカテゴリを混ぜて 1 問ずつ出題する:
+
+- **(A) 基礎** — 設計思想・主要 API・バージョン差異
+- **(B) 実践 (repo-grounded)** — このリポジトリの実ファイルを引用し、「なぜこう書くのか / 落とし穴は」を問う
+- **(C) 比較** — 類似技術 (例: Next.js ↔ Remix/Nuxt, Prisma ↔ Drizzle) とのトレードオフ
+- **(D) 最新動向** — 直近の非推奨 API や推奨プラクティスの変化
+
+```
+/study                              検出 → 対象確認 → 出題
+/study React --level=hard --count=8 特定トピックで高難度 8 問
+/study --lang=en                    英語モード
+```
+
+採点後は解説と公式ドキュメントへのリンクが付き、セッション終了時にはカテゴリ別正答率と次に学ぶべき弱点トピックを提示する。
+
 ## リポジトリ構成
 
 ```
 .claude-plugin/
-  plugin.json          プラグインマニフェスト
+  plugin.json          check-gh-head のマニフェスト
   marketplace.json     このリポジトリをマーケットプレイス化
 commands/
   check-gh-head.md     /check-gh-head スラッシュコマンド
@@ -61,11 +84,17 @@ hooks/
   hooks.json           SessionStart フック定義
 scripts/
   check-merge-status.sh  判定ロジック本体
+study/
+  .claude-plugin/
+    plugin.json        study のマニフェスト
+  commands/
+    study.md           /study スラッシュコマンド
 ```
 
 ## アンインストール
 
 ```
 /plugin uninstall check-gh-head@koyon-work
+/plugin uninstall study@koyon-work
 /plugin marketplace remove koyon-work
 ```
