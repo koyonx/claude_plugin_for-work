@@ -12,6 +12,14 @@
       "version": "0.1.0",
       "homepage": "https://github.com/koyonx/claude_plugin_for-work",
       "repository": "https://github.com/koyonx/claude_plugin_for-work"
+    },
+    {
+      "name": "study",
+      "source": "./study",
+      "description": "カレントリポジトリの技術スタックを検出し、実践的な使い方や類似技術との比較を問題形式で学べる学習プラグイン。",
+      "version": "0.1.0",
+      "homepage": "https://github.com/koyonx/claude_plugin_for-work",
+      "repository": "https://github.com/koyonx/claude_plugin_for-work"
     }
   ]
 }
